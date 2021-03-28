@@ -108,7 +108,7 @@ def serverThree():
         		n
     		)
 
-			cursor.execute(" INSERT INTO s06m3(dtime, v_res, cb_ctrl, cb_res, ld_res, f_res, hv_p_res, hv_q_res, lv_p_res, lv_q_res, tr_tap, tr_tap_ctrl, tr_tap_mode, tr_tap_res) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", inserted_values)
+			cursor.execute(" INSERT INTO s06m3(dtime, v_res, cb_ctrl, cb_res, ld_res, f_res, hv_p_res, hv_q_res, lv_p_res, lv_q_res, tap, tap_ctrl, tap_mode, tap_res) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", inserted_values)
 
 			print("3")
 
