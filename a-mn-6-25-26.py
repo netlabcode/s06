@@ -269,6 +269,11 @@ def emptyNet():
     info( net[ 's26m2' ].cmd( 'python3.6 as26m2.py &amp' ) )
     info( net[ 's26m3' ].cmd( 'python3.6 as26m3.py &amp' ) )
 
+    info( net[ 's15m1' ].cmd( 'python3.6 as15m1.py &amp' ) )
+    info( net[ 's15m2' ].cmd( 'python3.6 as15m2.py &amp' ) )
+    info( net[ 's15m3' ].cmd( 'python3.6 as15m3.py &amp' ) )
+    info( net[ 's15m4' ].cmd( 'python3.6 as15m4.py &amp' ) )
+
 
     CLI( net )
     net.stop()
