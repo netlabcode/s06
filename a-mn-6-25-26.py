@@ -40,6 +40,7 @@ def emptyNet():
     r6 = net.addHost('r6', cls=LinuxRouter, ip='100.6.0.1/16')
     r25 = net.addHost('r25', cls=LinuxRouter, ip='100.25.0.1/16')
     r26 = net.addHost('r26', cls=LinuxRouter, ip='100.26.0.1/16')
+    r15 = net.addHost('r15', cls=LinuxRouter, ip='100.15.0.1/16')
 
 
     #Switch External Gateway
@@ -52,6 +53,9 @@ def emptyNet():
     s61 = net.addSwitch( 's61' )
     s62 = net.addSwitch( 's62' )
     s63 = net.addSwitch( 's63' )
+    s151 = net.addSwitch( 's151' )
+    s152 = net.addSwitch( 's152' )
+    s153 = net.addSwitch( 's153' )
     s251 = net.addSwitch( 's251' )
     s252 = net.addSwitch( 's252' )
     s253 = net.addSwitch( 's253' )
@@ -62,11 +66,13 @@ def emptyNet():
     # Add host-switch links in the same subnet
     net.addLink(s999, r0, intfName2='r0-eth1', params2={'ip': '100.0.0.1/16'})
     net.addLink(s61, r6, intfName2='r6-eth1', params2={'ip': '100.6.0.1/16'})
+    net.addLink(s151, r15, intfName2='r15-eth1', params2={'ip': '100.15.0.1/16'})
     net.addLink(s251, r25, intfName2='r25-eth1', params2={'ip': '100.25.0.1/16'})
     net.addLink(s261, r26, intfName2='r26-eth1', params2={'ip': '100.26.0.1/16'})
 
      # Add router-router link in a new subnet for the router-router connection
     net.addLink(r0, r6, intfName1='r0-eth3', intfName2='r6-eth2', params1={'ip': '200.6.0.1/24'}, params2={'ip': '200.6.0.2/24'})
+    net.addLink(r0, r15, intfName1='r0-eth5', intfName2='r15-eth2', params1={'ip': '200.15.0.1/24'}, params2={'ip': '200.15.0.2/24'})
     net.addLink(r0, r25, intfName1='r0-eth2', intfName2='r25-eth2', params1={'ip': '200.25.0.1/24'}, params2={'ip': '200.25.0.2/24'})
     net.addLink(r0, r26, intfName1='r0-eth4', intfName2='r26-eth2', params1={'ip': '200.26.0.1/24'}, params2={'ip': '200.26.0.2/24'})
 
@@ -88,6 +94,17 @@ def emptyNet():
     s06db = net.addHost('s06db', ip='100.6.0.22')
     s06gw = net.addHost('s06gw', ip='100.6.0.23')
 
+    #Add Hosts on Substation 15
+    s15m1 = net.addHost('s15m1', ip='100.15.0.11', cls=CPULimitedHost, cpu=.1)
+    s15m2 = net.addHost('s15m2', ip='100.15.0.12', cls=CPULimitedHost, cpu=.1)
+    s15m3 = net.addHost('s15m3', ip='100.15.0.13', cls=CPULimitedHost, cpu=.1)
+    s15m4 = net.addHost('s15m4', ip='100.15.0.14', cls=CPULimitedHost, cpu=.1)
+    s15m5 = net.addHost('s15m5', ip='100.15.0.15', cls=CPULimitedHost, cpu=.1)
+    s15m6 = net.addHost('s15m6', ip='100.15.0.16', cls=CPULimitedHost, cpu=.1)
+    s15cpc = net.addHost('s15cpc', ip='100.15.0.21')
+    s15db = net.addHost('s15db', ip='100.15.0.22')
+    s15gw = net.addHost('s15gw', ip='100.15.0.23')
+    
     #Add Hosts on Substation 25
     s25m1 = net.addHost('s25m1', ip='100.25.0.11', cls=CPULimitedHost, cpu=.1)
     s25m2 = net.addHost('s25m2', ip='100.25.0.12', cls=CPULimitedHost, cpu=.1)
@@ -113,6 +130,8 @@ def emptyNet():
     # Link siwtch to switch
     net.addLink(s61,s62)
     net.addLink(s63,s62)
+    net.addLink(s151,s152)
+    net.addLink(s153,s152)
     net.addLink(s251,s252)
     net.addLink(s253,s252)
     net.addLink(s261,s262)
@@ -135,6 +154,17 @@ def emptyNet():
     net.addLink(s06cpc,s62)
     net.addLink(s06db,s62)
     net.addLink(s06gw,s61, intfName1='s06gw-eth1', params1={'ip':'100.6.0.23/24'})
+    
+    # Link Substation 15 Merging unit to Switch
+    net.addLink(s15m1,s153, intfName1='s15m1-eth1', params1={'ip':'100.15.0.11/24'}, cls=TCLink, bw=0.01 )
+    net.addLink(s15m2,s153, intfName1='s15m2-eth1', params1={'ip':'100.15.0.12/24'}, cls=TCLink, bw=0.01 )
+    net.addLink(s15m3,s153, intfName1='s15m3-eth1', params1={'ip':'100.15.0.13/24'}, cls=TCLink, bw=0.01 )
+    net.addLink(s15m4,s153, intfName1='s15m4-eth1', params1={'ip':'100.15.0.14/24'}, cls=TCLink, bw=0.01 )
+    net.addLink(s15m5,s153, intfName1='s15m5-eth1', params1={'ip':'100.15.0.15/24'}, cls=TCLink, bw=0.01 )
+    net.addLink(s15m6,s153, intfName1='s15m6-eth1', params1={'ip':'100.15.0.16/24'}, cls=TCLink, bw=0.01 )
+    net.addLink(s15cpc,s152)
+    net.addLink(s15db,s152)
+    net.addLink(s15gw,s151, intfName1='s15gw-eth1', params1={'ip':'100.15.0.23/24'})
     
     # Link Substation 25 Merging unit to Switch
     net.addLink(s25m1,s253, intfName1='s25m1-eth1', params1={'ip':'100.25.0.11/24'}, cls=TCLink, bw=0.01 )
@@ -163,7 +193,7 @@ def emptyNet():
     net.addLink(ccdb,s777, intfName1='ccdb-eth0', params1={'ip':'10.0.0.11/16'})
     net.addLink(cctl,s777, intfName1='cctl-eth0', params1={'ip':'10.0.0.12/16'})
 
-    # Link Host Substation 13 to switch to external gateway
+    # Link Host Substation 06 to switch to external gateway
     net.addLink(s06m1,s777, intfName1='s06m1-eth0', params1={'ip':'10.0.6.11/16'})
     net.addLink(s06m2,s777, intfName1='s06m2-eth0', params1={'ip':'10.0.6.12/16'})
     net.addLink(s06m3,s777, intfName1='s06m3-eth0', params1={'ip':'10.0.6.13/16'})
@@ -175,7 +205,16 @@ def emptyNet():
     net.addLink(s06m9,s777, intfName1='s06m9-eth0', params1={'ip':'10.0.6.19/16'})
     net.addLink(s06gw,s777, intfName1='s06gw-eth0', params1={'ip':'10.0.6.23/16'})
     
-    # Link Host Substation 10 to switch to external gateway
+    # Link Host Substation 15 to switch to external gateway
+    net.addLink(s15m1,s777, intfName1='s15m1-eth0', params1={'ip':'10.0.15.11/16'})
+    net.addLink(s15m2,s777, intfName1='s15m2-eth0', params1={'ip':'10.0.15.12/16'})
+    net.addLink(s15m3,s777, intfName1='s15m3-eth0', params1={'ip':'10.0.15.13/16'})
+    net.addLink(s15m4,s777, intfName1='s15m4-eth0', params1={'ip':'10.0.15.14/16'})
+    net.addLink(s15m5,s777, intfName1='s15m5-eth0', params1={'ip':'10.0.15.15/16'})
+    net.addLink(s15m6,s777, intfName1='s15m6-eth0', params1={'ip':'10.0.15.16/16'})
+    net.addLink(s15gw,s777, intfName1='s15gw-eth0', params1={'ip':'10.0.15.23/16'})
+
+    # Link Host Substation 25 to switch to external gateway
     net.addLink(s25m1,s777, intfName1='s25m1-eth0', params1={'ip':'10.0.25.11/16'})
     net.addLink(s25m2,s777, intfName1='s25m2-eth0', params1={'ip':'10.0.25.12/16'})
     net.addLink(s25m3,s777, intfName1='s25m3-eth0', params1={'ip':'10.0.25.13/16'})
@@ -211,6 +250,9 @@ def emptyNet():
     info( net[ 'r0' ].cmd( 'ip route add 100.6.0.0/24 via 200.6.0.2 dev r0-eth3' ) )
     info( net[ 'r6' ].cmd( 'ip route add 100.0.0.0/24 via 200.6.0.1 dev r6-eth2' ) )
 
+    info( net[ 'r0' ].cmd( 'ip route add 100.15.0.0/24 via 200.15.0.2 dev r0-eth5' ) )
+    info( net[ 'r15' ].cmd( 'ip route add 100.0.0.0/24 via 200.15.0.1 dev r15-eth2' ) )
+
     info( net[ 'r0' ].cmd( 'ip route add 100.25.0.0/24 via 200.25.0.2 dev r0-eth2' ) )
     info( net[ 'r25' ].cmd( 'ip route add 100.0.0.0/24 via 200.25.0.1 dev r25-eth2' ) )
 
@@ -227,6 +269,13 @@ def emptyNet():
     info( net[ 's06m8' ].cmd( 'ip route add 100.0.0.0/24 via 100.6.0.1 dev s06m8-eth1' ) )
     info( net[ 's06m9' ].cmd( 'ip route add 100.0.0.0/24 via 100.6.0.1 dev s06m9-eth1' ) )
 
+    info( net[ 's15m1' ].cmd( 'ip route add 100.0.0.0/24 via 100.15.0.1 dev s15m1-eth1' ) )
+    info( net[ 's15m2' ].cmd( 'ip route add 100.0.0.0/24 via 100.15.0.1 dev s15m2-eth1' ) )
+    info( net[ 's15m3' ].cmd( 'ip route add 100.0.0.0/24 via 100.15.0.1 dev s15m3-eth1' ) )
+    info( net[ 's15m4' ].cmd( 'ip route add 100.0.0.0/24 via 100.15.0.1 dev s15m4-eth1' ) )
+    info( net[ 's15m5' ].cmd( 'ip route add 100.0.0.0/24 via 100.15.0.1 dev s15m5-eth1' ) )
+    info( net[ 's15m6' ].cmd( 'ip route add 100.0.0.0/24 via 100.15.0.1 dev s15m6-eth1' ) )
+
     info( net[ 's25m1' ].cmd( 'ip route add 100.0.0.0/24 via 100.25.0.1 dev s25m1-eth1' ) )
     info( net[ 's25m2' ].cmd( 'ip route add 100.0.0.0/24 via 100.25.0.1 dev s25m2-eth1' ) )
     info( net[ 's25m3' ].cmd( 'ip route add 100.0.0.0/24 via 100.25.0.1 dev s25m3-eth1' ) )
@@ -242,10 +291,12 @@ def emptyNet():
     info( net[ 's26m6' ].cmd( 'ip route add 100.0.0.0/24 via 100.26.0.1 dev s26m6-eth1' ) )
     
     info( net[ 'ccdb' ].cmd( 'ip route add 100.6.0.0/24 via 100.0.0.1 dev ccdb-eth1' ) )
+    info( net[ 'ccdb' ].cmd( 'ip route add 100.15.0.0/24 via 100.0.0.1 dev ccdb-eth1' ) )
     info( net[ 'ccdb' ].cmd( 'ip route add 100.25.0.0/24 via 100.0.0.1 dev ccdb-eth1' ) )
     info( net[ 'ccdb' ].cmd( 'ip route add 100.26.0.0/24 via 100.0.0.1 dev ccdb-eth1' ) )
 
     info( net[ 'cctl' ].cmd( 'ip route add 100.6.0.0/24 via 100.0.0.1 dev cctl-eth1' ) )
+    info( net[ 'cctl' ].cmd( 'ip route add 100.15.0.0/24 via 100.0.0.1 dev cctl-eth1' ) )
     info( net[ 'cctl' ].cmd( 'ip route add 100.25.0.0/24 via 100.0.0.1 dev cctl-eth1' ) )
     info( net[ 'cctl' ].cmd( 'ip route add 100.26.0.0/24 via 100.0.0.1 dev cctl-eth1' ) )
     
@@ -260,6 +311,11 @@ def emptyNet():
     info( net[ 's06m4' ].cmd( 'python3.6 as06m4.py &amp' ) )
     info( net[ 's06m5' ].cmd( 'python3.6 as06m5.py &amp' ) )
     info( net[ 's06m6' ].cmd( 'python3.6 as06m6.py &amp' ) )
+
+    info( net[ 's15m1' ].cmd( 'python3.6 as15m1.py &amp' ) )
+    info( net[ 's15m2' ].cmd( 'python3.6 as15m2.py &amp' ) )
+    info( net[ 's15m3' ].cmd( 'python3.6 as15m3.py &amp' ) )
+    info( net[ 's15m4' ].cmd( 'python3.6 as15m4.py &amp' ) )
 
     info( net[ 's25m1' ].cmd( 'python3.6 as25m1.py &amp' ) )
     info( net[ 's25m2' ].cmd( 'python3.6 as25m2.py &amp' ) )
