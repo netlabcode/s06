@@ -330,6 +330,20 @@ def emptyNet():
     info( net[ 's15m3' ].cmd( 'python3.6 as15m3.py &amp' ) )
     info( net[ 's15m4' ].cmd( 'python3.6 as15m4.py &amp' ) )
 
+    time.sleep(2)
+
+    info( net[ 's06gw' ].cmd( 'python3.6 as06gdb.py &amp' ) )
+    info( net[ 's15gw' ].cmd( 'python3.6 as15gdb.py &amp' ) )
+    info( net[ 's25gw' ].cmd( 'python3.6 as25gdb.py &amp' ) )
+    info( net[ 's26gw' ].cmd( 'python3.6 as26gdb.py &amp' ) )
+
+    time.sleep(2)
+
+    info( net[ 's06gw' ].cmd( 'python3.6 as06gcc.py &amp' ) )
+    info( net[ 's15gw' ].cmd( 'python3.6 as15gcc.py &amp' ) )
+    info( net[ 's25gw' ].cmd( 'python3.6 as25gcc.py &amp' ) )
+    info( net[ 's26gw' ].cmd( 'python3.6 as26gcc.py &amp' ) )
+
 
     CLI( net )
     net.stop()
